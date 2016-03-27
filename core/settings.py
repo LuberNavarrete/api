@@ -136,3 +136,10 @@ REST_FRAMEWORK = {
         'url_filter.integrations.drf.DjangoFilterBackend',
     ]
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    )
+}
