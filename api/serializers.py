@@ -4,7 +4,7 @@ from .models import Categoria, Post, Foto
 class CategoriaSerializer(ModelSerializer):
 	class Meta:
 		model = Categoria
-		fields = ('titulo','activo')
+		# fields = ('id','titulo','activo')
 
 class PostSerializer(ModelSerializer):
 
@@ -12,7 +12,7 @@ class PostSerializer(ModelSerializer):
 
 	class Meta:
 		model = Post
-		fields = ('id','titulo','texto','posteado','fecha_inicio','fecha_fin','categoria','posteable')
+		# fields = ('id','titulo','texto','posteado','fecha_inicio','fecha_fin','categoria','posteable')
 
 class FotoSerializer(ModelSerializer):
 
@@ -20,4 +20,4 @@ class FotoSerializer(ModelSerializer):
 
 	class Meta:
 		model = Foto
-		fields = ('post','imagen')
+		# fields = ('post','imagen')
