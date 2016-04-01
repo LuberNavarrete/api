@@ -1,12 +1,20 @@
-from serializers import CategoriaSerializer,PostSerializer,FotoSerializer
+from serializers import CategoriaSerializer,PostSerializer,FotoSerializer#, BannerSerializer
 from models import Categoria, Post, Foto
 from rest_framework import viewsets, permissions, filters
+from rest_framework.decorators import api_view
 
 class FotoViewSet(viewsets.ModelViewSet):
 	serializer_class = FotoSerializer
 	queryset = Foto.objects.all()
-	lookup_field = 'post'
+	#lookup_field = 'post'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+	def get_queryset(self):
+		query = self.request.query_params
+		queryset = self.queryset
+		if 'post' in query.keys():
+			queryset = queryset.filter(post = query.get('post'))
+		return queryset
 
 class CategoriaViewSet(viewsets.ModelViewSet):
 	serializer_class = CategoriaSerializer
@@ -37,7 +45,18 @@ class PostViewSet(viewsets.ModelViewSet):
 			pos = True if query.get('posteable') == 'true' else False
 			queryset = queryset.filter(posteable = pos)
 		if 'categoria' in query.keys():
-			print query.get('categoria')
 			queryset = queryset.filter(categoria__titulo = query.get('categoria'))
-			print queryset
 		return queryset
+
+
+#class BannerViewSet(viewsets.ModelViewSet):
+#	serializer_class = BannerSerializer
+#	queryset = Post.objects.all().filter(posteable = True).order_by('-posteado')[:3]
+#
+#	def get_queryset(self):
+#		query = self.request.query_params
+#		queryset = self.queryset
+#
+#		if 'categoria' in query.keys():
+#			queryset = queryset.filter(categoria__titulo = query.get('categoria'))
+#		return queryset
