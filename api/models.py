@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-# from django_autoslug.fields import AutoSlugField
+from django.template import defaultfilters
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -12,7 +12,7 @@ class Categoria(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=100, unique=True)
-    # slug = AutoSlugField(populate_from='title', unique_with='posteado')
+    slug = models.SlugField(max_length=100,null = True, blank = True, editable = False)
     texto = models.TextField()
     posteado = models.DateField(auto_now_add=True)
     fecha_inicio = models.DateTimeField(null = True, blank = True)
@@ -20,6 +20,10 @@ class Post(models.Model):
     categoria = models.ForeignKey('Categoria',limit_choices_to={'activo': True})
     # propietario = models.ForeignKey(User)
     posteable = models.BooleanField(default = 'true')
+
+    def save(self, *args, **kwargs):
+         self.slug = defaultfilters.slugify(self.titulo)
+         super(Post, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return '%s' % self.titulo

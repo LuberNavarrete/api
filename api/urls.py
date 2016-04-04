@@ -4,14 +4,15 @@ from rest_framework.routers import DefaultRouter
 from views import FotoViewSet,CategoriaViewSet,PostViewSet
 from rest_framework.authtoken import views
 
-router = DefaultRouter()
-router.register(r'foto',FotoViewSet)
-router.register(r'categoria',CategoriaViewSet)
-router.register(r'post',PostViewSet)
+from django.conf import settings
+from django.conf.urls.static import static
 
-urlpatterns = patterns('api.views',
+router = DefaultRouter()
+router.register(r'fotos',FotoViewSet)
+router.register(r'categorias',CategoriaViewSet)
+router.register(r'posts',PostViewSet)
+
+urlpatterns = [
 	url(r'^',include(router.urls)),
 	url(r'^logearse/', views.obtain_auth_token),
-	# url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': core/settings.STATIC_ROOT}),
-    # url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': core/settings.MEDIA_ROOT}), 
-)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
