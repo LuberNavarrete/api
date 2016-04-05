@@ -5,7 +5,7 @@ class CategoriaAdmin(admin.ModelAdmin):
 	list_display = ('titulo','activo')
 
 class PostAdmin(admin.ModelAdmin):
-	list_display = ('titulo','posteado','categoria','posteable')
+	list_display = ('titulo','posteado','fecha_inicio','fecha_fin','categoria','posteable')
 
 class FotoAdmin(admin.ModelAdmin):
 	list_display = ('post','imagen')

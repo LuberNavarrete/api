@@ -37,7 +37,5 @@ class PostViewSet(viewsets.ModelViewSet):
 			pos = True if query.get('posteable') == 'true' else False
 			queryset = queryset.filter(posteable = pos)
 		if 'categoria' in query.keys():
-			print query.get('categoria')
 			queryset = queryset.filter(categoria__titulo = query.get('categoria'))
-			print queryset
 		return queryset

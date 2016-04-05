@@ -15,4 +15,5 @@ router.register(r'posts',PostViewSet)
 urlpatterns = [
 	url(r'^',include(router.urls)),
 	url(r'^logearse/', views.obtain_auth_token),
+	url(r'^tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

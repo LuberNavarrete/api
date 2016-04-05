@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 from django.template import defaultfilters
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 class Categoria(models.Model):
     titulo = models.CharField(max_length=100, unique=True)
@@ -13,7 +14,7 @@ class Categoria(models.Model):
 class Post(models.Model):
     titulo = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100,null = True, blank = True, editable = False)
-    texto = models.TextField()
+    texto = HTMLField()
     posteado = models.DateField(auto_now_add=True)
     fecha_inicio = models.DateTimeField(null = True, blank = True)
     fecha_fin = models.DateTimeField(null = True, blank = True)
