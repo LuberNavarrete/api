@@ -23,8 +23,8 @@ class Post(models.Model):
     posteable = models.BooleanField(default = 'true')
 
     def save(self, *args, **kwargs):
-         self.slug = defaultfilters.slugify(self.titulo)
-         super(Post, self).save(*args, **kwargs)
+        self.slug = defaultfilters.slugify(self.titulo)
+        super(Post, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return '%s' % self.titulo

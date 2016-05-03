@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,7 +89,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -150,8 +148,16 @@ REST_FRAMEWORK = {
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
     )
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+    'height' : 300,
+    'width' : 800,
+}

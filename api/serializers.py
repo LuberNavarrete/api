@@ -21,3 +21,11 @@ class FotoSerializer(ModelSerializer):
 	class Meta:
 		model = Foto
 		# fields = ('post','imagen')
+
+class BannerSerializer(ModelSerializer):
+
+	#categoria = CategoriaSerializer(many = False)
+
+	class Meta:
+		model = Post
+		fields = ('id','titulo')

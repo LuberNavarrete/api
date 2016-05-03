@@ -1,4 +1,4 @@
-from serializers import CategoriaSerializer,PostSerializer,FotoSerializer
+from serializers import CategoriaSerializer,PostSerializer,FotoSerializer,BannerSerializer
 from models import Categoria, Post, Foto
 from rest_framework import viewsets, permissions, filters
 
@@ -27,7 +27,7 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
 	serializer_class = PostSerializer
 	queryset = Post.objects.all().order_by('-posteado')
-	lookup_field = 'id'
+	lookup_field = 'slug'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def get_queryset(self):
@@ -39,3 +39,9 @@ class PostViewSet(viewsets.ModelViewSet):
 		if 'categoria' in query.keys():
 			queryset = queryset.filter(categoria__titulo = query.get('categoria'))
 		return queryset
+
+class BannerViewSet(viewsets.ModelViewSet):
+	serializer_class = BannerSerializer
+	queryset = Post.objects.all().order_by('-posteado')[:3]
+	#lookup_field = 'slug'
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
