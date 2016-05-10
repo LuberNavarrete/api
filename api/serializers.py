@@ -16,16 +16,13 @@ class PostSerializer(ModelSerializer):
 
 class FotoSerializer(ModelSerializer):
 
-	post = PostSerializer(many = False)
+	# post = PostSerializer(many = False)
 
 	class Meta:
 		model = Foto
-		# fields = ('post','imagen')
+		fields = ('post','src')
 
 class BannerSerializer(ModelSerializer):
-
-	#categoria = CategoriaSerializer(many = False)
-
 	class Meta:
 		model = Post
-		fields = ('id','titulo')
+		fields = ('id','titulo','resumen')

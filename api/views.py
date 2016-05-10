@@ -2,11 +2,21 @@ from serializers import CategoriaSerializer,PostSerializer,FotoSerializer,Banner
 from models import Categoria, Post, Foto
 from rest_framework import viewsets, permissions, filters
 
+##Remueve tags de html
+from django.utils.html import strip_tags
+
 class FotoViewSet(viewsets.ModelViewSet):
 	serializer_class = FotoSerializer
 	queryset = Foto.objects.all()
-	lookup_field = 'post'
+	# lookup_field = 'post'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+	def get_queryset(self):
+		query = self.request.query_params
+		queryset = self.queryset
+		if 'post' in query.keys():
+			queryset = queryset.filter(post = query.get('post'))
+		return queryset
 
 class CategoriaViewSet(viewsets.ModelViewSet):
 	serializer_class = CategoriaSerializer
@@ -43,5 +53,4 @@ class PostViewSet(viewsets.ModelViewSet):
 class BannerViewSet(viewsets.ModelViewSet):
 	serializer_class = BannerSerializer
 	queryset = Post.objects.all().order_by('-posteado')[:3]
-	#lookup_field = 'slug'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
