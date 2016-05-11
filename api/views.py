@@ -1,9 +1,20 @@
 from serializers import CategoriaSerializer,PostSerializer,FotoSerializer,BannerSerializer
 from models import Categoria, Post, Foto
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets,permissions,filters
+from rest_framework.pagination import PageNumberPagination
 
 ##Remueve tags de html
 from django.utils.html import strip_tags
+
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 50
 
 class FotoViewSet(viewsets.ModelViewSet):
 	serializer_class = FotoSerializer
@@ -23,6 +34,7 @@ class CategoriaViewSet(viewsets.ModelViewSet):
 	queryset = Categoria.objects.all()
 	lookup_field = 'id'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+	pagination_class = StandardResultsSetPagination
 	
 	def get_queryset(self):
 		query = self.request.query_params
@@ -39,6 +51,7 @@ class PostViewSet(viewsets.ModelViewSet):
 	queryset = Post.objects.all().order_by('-posteado')
 	lookup_field = 'slug'
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+	pagination_class = StandardResultsSetPagination
 
 	def get_queryset(self):
 		query = self.request.query_params

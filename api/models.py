@@ -28,7 +28,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = defaultfilters.slugify(self.titulo)
-        self.resumen = strip_tags(self.texto)[:450]
+        self.resumen = strip_tags(self.texto)[:850]
 
         super(Post, self).save(*args, **kwargs)
 
