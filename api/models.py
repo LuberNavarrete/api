@@ -28,8 +28,11 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = defaultfilters.slugify(self.titulo)
-        self.resumen = strip_tags(self.texto)[:850]
-
+        self.resumen = strip_tags(self.texto)[:750] # Recorta la cadena
+        self.resumen = self.resumen.replace('&nbsp;', ' ') # Espacio horizontal
+        self.resumen = self.resumen.replace('acute;', '') # Espacio palabras con acento derecha
+        self.resumen = self.resumen.replace('&', '') # Espacio palabras con acento izquierda
+        self.resumen = self.resumen.replace('\r\n', ' ') # Salto de linea
         super(Post, self).save(*args, **kwargs)
 
     def __unicode__(self):

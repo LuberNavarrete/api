@@ -25,4 +25,4 @@ class FotoSerializer(ModelSerializer):
 class BannerSerializer(ModelSerializer):
 	class Meta:
 		model = Post
-		fields = ('id','titulo','resumen')
+		fields = ('id','slug','titulo','resumen','posteado')

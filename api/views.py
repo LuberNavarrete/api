@@ -65,5 +65,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class BannerViewSet(viewsets.ModelViewSet):
 	serializer_class = BannerSerializer
-	queryset = Post.objects.all().order_by('-posteado')[:3]
+	queryset = Post.objects.all().order_by('-posteado')
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+	def get_queryset(self):
+		query = self.request.query_params
+		queryset = self.queryset
+		if 'categoria' in query.keys():
+			queryset = queryset.filter(categoria__titulo = query.get('categoria'))[:3]
+		return queryset
